@@ -397,7 +397,9 @@ def main():
     if model_args.tokenizer_name:
         tokenizer = AutoTokenizer.from_pretrained(model_args.tokenizer_name, **tokenizer_kwargs)
     elif model_args.tokenizer_name_or_path:
-        tokenizer = LlamaTokenizer.from_pretrained(model_args.tokenizer_name_or_path, **tokenizer_kwargs)
+        tokenizer = LlamaTokenizer.from_pretrained(
+            model_args.tokenizer_name_or_path, **tokenizer_kwargs
+        )
     else:
         raise ValueError(
             "You are instantiating a new tokenizer from scratch. This is not supported by this script."
@@ -609,7 +611,7 @@ def main():
         lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
     ).__get__(model, type(model))
     for n, p in model.named_parameters():
-        print(n, p.requires_grad)
+        print(n, p.requires_grad, p.shape)
 
     data_collator = DataCollatorForSeq2Seq(
         tokenizer,

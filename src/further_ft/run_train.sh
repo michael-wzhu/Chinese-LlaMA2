@@ -4,7 +4,8 @@ lora_trainable="q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj"
 #lora_trainable="q_proj,v_proj,k_proj,o_proj"
 modules_to_save="embed_tokens,lm_head"
 lora_dropout=0.1
-pretrained_model="/public/home/xlwang2/codes/Chinese-LlaMA2/resources/chinese-llama-tmp0"
+pretrained_model="/public/home/xlwang2/codes/Chinese-LlaMA2/resources/models--meta-llama--Llama-2-7b-hf/snapshots/4e4d531bcab430a66c4d562b7e89e21c0fa235ea"
+tokenizer_name_or_path="/public/home/xlwang2/codes/Med_Prompts/models--ziqingyang--chinese-llama-plus-lora-7b/snapshots/32115d9a87767a8e00464dc560030a12bf38cb24"
 dataset_name="/public/home/xlwang2/codes/Chinese-LlaMA2/datasets/pretrain_data/"
 dataset_cache_dir="/public/home/xlwang2/codes/Chinese-LlaMA2/datasets/pretrain_data/cache"
 per_device_batch_size=2
@@ -21,7 +22,7 @@ torchrun \
    internal/run_clm_lora.py \
     --deepspeed ${deepspeed_config_file} \
     --model_name_or_path ${pretrained_model} \
-    --tokenizer_name_or_path ${pretrained_model} \
+    --tokenizer_name_or_path ${tokenizer_name_or_path} \
     --dataset_name ${dataset_name} \
     --dataset_cache_dir ${dataset_cache_dir} \
     --validation_split_percentage 0.001 \

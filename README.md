@@ -23,3 +23,28 @@
 
 
 ## 更新
+
+2023/07/19 启动LlaMA-2中文大模型；
+
+
+
+## 操作步骤
+
+### 获得llama-2权重
+
+现在LlaMA-2权重需要在Meta指定的官方网站申请，具体说明见[LlaMA-的hf页面](https://huggingface.co/meta-llama/Llama-2-70b-hf)。当你没有通过申请时，在这个网页上看到的是一个申请表，你需要根据他的说明进行申请，申请通过后就可以看到权重文件了。
+
+### 扩充词表和扩展embedding层
+
+我们现在采用的方案是：使用[Chinese-LLaMA](https://github.com/ymcui/Chinese-LLaMA-Alpaca)的词表，该词表是对llama原始词表的扩充，将词汇量从32000扩展到49953大小。同时LlaMA-2模型会进行embedding层的resize，即采用随机初始化的参数扩展embedding层和lm_head层。
+
+在一些我们关注的垂直领域，我们后续也会自己训一个sentencepiece模型来更新llama-2的词表。
+
+### 继续预训练
+
+由于扩展词表后，LlaMA-2的embedding层和lm_head层会有随机初始化的参数，所以我们需要采用大规模的预训练学习中文语料的知识。预训练运行以下命令(数据，模型的路径，卡数等需要自行配置)：
+
+```bash
+CUDA_VISIBLE_DEVICES="2,3" ./internal/run_train.sh
+
+```
