@@ -472,8 +472,8 @@ def main():
         raw_datasets = load_dataset(
             "json",
             data_files={
-                "train": os.path.join(data_args.dataset_name, "baidu_baike.json"),
-                # "test": os.path.join(data_args.dataset_name, "dev.json"),
+                "train": os.path.join(data_args.dataset_name, "train.json"),
+                "test": os.path.join(data_args.dataset_name, "test.json"),
             },
             cache_dir=data_args.dataset_cache_dir,
             use_auth_token=True if model_args.use_auth_token else None,
