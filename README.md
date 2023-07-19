@@ -48,3 +48,14 @@
 CUDA_VISIBLE_DEVICES="2,3" ./internal/run_train.sh
 
 ```
+
+
+
+## 评测交流与技术交流
+
+PromptCBLUE与大模型技术交流微信交流群二维码（截止至7月23日有效）：
+<p align="left">
+    <br>
+    <img src="./assets/wechat_qrcode.jpg" width="300"/>
+    <br>
+</p>
