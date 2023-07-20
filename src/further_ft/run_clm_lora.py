@@ -65,8 +65,8 @@ sys.path.append("./")
 
 from peft import LoraConfig, TaskType, get_peft_model, PeftModel, get_peft_model_state_dict
 
-from internal.modeling_llama import LlamaForCausalLM
-from internal.tokenization_llama import LlamaTokenizer
+from src.further_ft.modeling_llama import LlamaForCausalLM
+from src.further_ft.tokenization_llama import LlamaTokenizer
 
 os.environ["WANDB_MODE"] = "disabled"
 
