@@ -45,7 +45,7 @@
 由于扩展词表后，LlaMA-2的embedding层和lm_head层会有随机初始化的参数，所以我们需要采用大规模的预训练学习中文语料的知识。预训练运行以下命令(数据，模型的路径，卡数等需要自行配置)：
 
 ```bash
-CUDA_VISIBLE_DEVICES="2,3" ./internal/run_train.sh
+CUDA_VISIBLE_DEVICES="2,3" ./src/further_ft/run_train.sh
 
 ```
 
