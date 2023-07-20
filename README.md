@@ -12,7 +12,7 @@
 
 就在不久前，Meta最新开源了Llama 2模型，完全可商用，看来Meta势必要与OpenAI (ClosedAI) 硬刚到底。虽然Llama 2对原版的LlaMA模型做了升级，但是其仍然对中文没有太好的支持，需要在中文上做定制化。所以我们决定在次开展Llama 2的中文汉化工作：
 - ⏳[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行中文预训练；
-  - 第一步：先在5.2G中文预料上进行训练；后续将会加大训练规模 
+  - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
 - ⏳[Chinese-LlaMA2-chat](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chat): 对[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B)进行指令微调和多轮对话微调，以适应各种应用场景和多轮对话交互。
 
 注意，为了遵循相应的许可，我们将不会发布完整的模型权重，只发布LoRA权重，其与Meta的LlaMA2权重合并即可形成Chinese-LlaMA2模型。
@@ -44,7 +44,7 @@
 由于扩展词表后，LlaMA-2的embedding层和lm_head层会有随机初始化的参数，所以我们需要采用大规模的预训练学习中文语料的知识。预训练运行以下命令(数据，模型的路径，卡数等需要自行配置)：
 
 ```bash
-CUDA_VISIBLE_DEVICES="2,3" ./internal/run_train.sh
+CUDA_VISIBLE_DEVICES="2,3" ./src/further_ft/run_train.sh
 
 ```
 
@@ -58,3 +58,8 @@ PromptCBLUE与大模型技术交流微信交流群二维码（截止至7月23日
     <img src="./assets/wechat_qrcode.jpg" width="300"/>
     <br>
 </p>
+
+
+## 团队介绍
+
+本项目由华东师范大学计算机科学与技术学院智能知识管理与服务团队完成，团队指导老师为王晓玲教授。

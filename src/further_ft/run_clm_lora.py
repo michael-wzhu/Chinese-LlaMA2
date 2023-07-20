@@ -65,8 +65,8 @@ sys.path.append("./")
 
 from peft import LoraConfig, TaskType, get_peft_model, PeftModel, get_peft_model_state_dict
 
-from internal.modeling_llama import LlamaForCausalLM
-from internal.tokenization_llama import LlamaTokenizer
+from src.further_ft.modeling_llama import LlamaForCausalLM
+from src.further_ft.tokenization_llama import LlamaTokenizer
 
 os.environ["WANDB_MODE"] = "disabled"
 
@@ -457,6 +457,8 @@ def main():
             if total_length > len(t):
                 if k == "input_ids":
                     t = t + [tokenizer.pad_token_id] * (total_length - len(t))
+                elif k == "attention_mask":
+                    t = t + [0] * (total_length - len(t))
                 else:
                     t = t + [-100] * (total_length - len(t))
 
