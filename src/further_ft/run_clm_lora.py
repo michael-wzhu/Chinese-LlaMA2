@@ -457,6 +457,8 @@ def main():
             if total_length > len(t):
                 if k == "input_ids":
                     t = t + [tokenizer.pad_token_id] * (total_length - len(t))
+                elif k == "attention_mask":
+                    t = t + [0] * (total_length - len(t))
                 else:
                     t = t + [-100] * (total_length - len(t))
 
