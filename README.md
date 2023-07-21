@@ -15,6 +15,9 @@
   - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
 - ⏳[Chinese-LlaMA2-chat](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chat): 对[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B)进行指令微调和多轮对话微调，以适应各种应用场景和多轮对话交互。
 
+同时我们也考虑更为快速的中文适配方案：
+- ⏳Chinese-LlaMA2-sft-v0: 采用现有的开源中文指令微调或者是对话数据，对LlaMA-2进行直接微调 (将于近期开源)
+
 注意，为了遵循相应的许可，我们将不会发布完整的模型权重，只发布LoRA权重，其与Meta的LlaMA2权重合并即可形成Chinese-LlaMA2模型。
 
 同时，我们将会围绕Chinese-LlaMA2打造各种垂直领域模型：
