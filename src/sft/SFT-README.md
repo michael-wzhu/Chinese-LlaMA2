@@ -27,7 +27,12 @@ CUDA_VISIBLE_DEVICES="0,1,2,3" ./src/sft/run_train_sft.sh
 
 ```
 
-因为LlaMA-2开源了chat版本的模型，所以我们其实采用`Llama-2-7b-chat-hf`应该是更适合的。
+因为LlaMA-2开源了chat版本的模型，所以我们其实采用`Llama-2-7b-chat-hf`应该是更适合的。微调`Llama-2-7b-chat-hf`模型，运行：
+```bash
+CUDA_VISIBLE_DEVICES="0,1,2,3" ./src/sft/run_train_sft.sh
+
+```
+
 
 ### 加载和起服务
 

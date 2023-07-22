@@ -30,7 +30,7 @@ torchrun \
     --per_device_eval_batch_size ${per_device_batch_size} \
     --do_train \
     --seed 100 \
-    --fp16 \
+    --bf16 \
     --max_steps ${training_steps} \
     --lr_scheduler_type cosine \
     --leraning_rate ${lr} \
@@ -52,7 +52,7 @@ torchrun \
     --trainable ${lora_trainable} \
     --modules_to_save ${modules_to_save} \
     --lora_dropout ${lora_dropout} \
-    --torch_dtype float16
+    --torch_dtype auto
 
 #   --deepspeed ${deepspeed_config_file} \
 

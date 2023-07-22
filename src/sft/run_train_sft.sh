@@ -53,7 +53,7 @@ torchrun \
     --trainable ${lora_trainable} \
     --modules_to_save ${modules_to_save} \
     --lora_dropout ${lora_dropout} \
-    --torch_dtype bfloat16
+    --torch_dtype auto
 
 #   --deepspeed ${deepspeed_config_file} \
 
