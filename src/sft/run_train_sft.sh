@@ -1,25 +1,26 @@
-lr=1e-4
-lora_rank=24
+lr=2e-5
+lora_rank=20
 lora_trainable="q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj"
 #lora_trainable="q_proj,v_proj,k_proj,o_proj"
 modules_to_save="embed_tokens,lm_head"
 lora_dropout=0.1
-pretrained_model="/you_path_to_llama_hf_ckpt"
-tokenizer_name_or_path="/public/home/xlwang2/codes/Med_Prompts/models--ziqingyang--chinese-llama-plus-lora-7b/snapshots/32115d9a87767a8e00464dc560030a12bf38cb24"
-dataset_name="/public/home/xlwang2/codes/Chinese-LlaMA2/datasets/pretrain_data/"
-dataset_cache_dir="/public/home/xlwang2/codes/Chinese-LlaMA2/datasets/pretrain_data/cache"
-per_device_batch_size=2
-per_device_batch_size=2
-gradient_accumulation_steps=128
-training_steps=10000
-output_dir="./experiments/output/chinese-llama2-7b-pt-v0"
-deepspeed_config_file="internal/deepspeed_config_zero2.json"
+pretrained_model="/your_path/models--meta-llama--Llama-2-7b-hf/snapshots/4e4d531bcab430a66c4d562b7e89e21c0fa235ea"
+tokenizer_name_or_path="/your_path/models--meta-llama--Llama-2-7b-hf/snapshots/4e4d531bcab430a66c4d562b7e89e21c0fa235ea"
+dataset_name="/your_path/datasets/pretrain_data/sft_corpus/"
+dataset_cache_dir="/your_path/datasets/sft_data/cache1"
+per_device_batch_size=1
+per_device_batch_size=1
+gradient_accumulation_steps=160
+training_steps=30000
+output_dir="./experiments/output/chinese-llama2-sft-7b-pt-v0"
+# deepspeed_config_file="internal/deepspeed_config_zero2.json"
+deepspeed_config_file="internal/deepspeed_config_zero2_bf16.json"
 
 torchrun \
   --nnodes 1 \
-  --nproc_per_node 2 \
-  --rdzv_id=1 --rdzv_backend=c10d --rdzv_endpoint=localhost:12356 \
-   internal/run_clm_lora.py \
+  --nproc_per_node 4 \
+  --rdzv_id=1 --rdzv_backend=c10d --rdzv_endpoint=localhost:12589 \
+   internal/run_clm_lora_instruct.py \
     --deepspeed ${deepspeed_config_file} \
     --model_name_or_path ${pretrained_model} \
     --tokenizer_name_or_path ${tokenizer_name_or_path} \
@@ -35,15 +36,15 @@ torchrun \
     --lr_scheduler_type cosine \
     --leraning_rate ${lr} \
     --warmup_ratio 0.05 \
-    --weight_decay 0.01 \
+    --weight_decay 0.0001 \
     --logging_strategy steps \
-    --logging_steps 10 \
+    --logging_steps 1 \
     --save_strategy steps \
-    --save_total_limit 25 \
-    --save_steps 100 \
+    --save_total_limit 500 \
+    --save_steps 200 \
     --gradient_accumulation_steps ${gradient_accumulation_steps} \
     --preprocessing_num_workers 8 \
-    --block_size 512 \
+    --block_size 1024 \
     --output_dir ${output_dir} \
     --overwrite_output_dir \
     --ddp_timeout 30000 \
@@ -56,4 +57,4 @@ torchrun \
 
 #   --deepspeed ${deepspeed_config_file} \
 
-# CUDA_VISIBLE_DEVICES="2,3" ./internal/run_train.sh
+# CUDA_VISIBLE_DEVICES="0,1,2,3" ./src/sft/run_train_instruct.sh
