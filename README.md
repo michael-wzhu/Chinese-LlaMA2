@@ -30,7 +30,7 @@
 
 ## 更新
 
-2023/07/24 更新了一个不扩充词表，微调了100w指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
+2023/07/24 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
   - 几个测试例子见[test examples](./assets/20230724/test_examples.json)；
   - 此模型是PEFT模型加上微调后的embedding和LM head参数，使用部署请参照[SFT-README](./src/sft/SFT-README.md)或者[vllm-REAME](./src/vllm_serving/REAME.md);
   - 此模型具有初步的中文沟通和任务能力，但是中文知识仍然有限；我们会持续更新更加强大的版本
