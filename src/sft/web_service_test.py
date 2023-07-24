@@ -1,9 +1,6 @@
-
-
-
 # coding=utf-8
 # Created by Michael Zhu
-# DataSelect AI, 2023
+# ECNU, 2023
 
 import json
 import time
