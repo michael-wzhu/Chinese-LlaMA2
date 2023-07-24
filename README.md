@@ -11,7 +11,10 @@
 </p>
 
 就在不久前，Meta最新开源了Llama 2模型，完全可商用，看来Meta势必要与OpenAI (ClosedAI) 硬刚到底。虽然Llama 2对原版的LlaMA模型做了升级，但是其仍然对中文没有太好的支持，需要在中文上做定制化。所以我们决定在次开展Llama 2的中文汉化工作：
-- ⏳[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行中文预训练；
+- [Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft)：对Llama-2直接进行有监督微调，
+  - 采用开源指令微调数据，如UltraChat, 各种版本的中文alpaca语料等；
+  - 注意LlaMA词表本身是支持中文的，所以我们会训练不扩充词表版本和扩充词表版本
+- ⏳[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行大规模中文预训练；
   - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
 - ⏳[Chinese-LlaMA2-chat](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chat): 对[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B)进行指令微调和多轮对话微调，以适应各种应用场景和多轮对话交互。
 
@@ -27,9 +30,14 @@
 
 ## 更新
 
+2023/07/24 更新了一个不扩充词表，微调了100w指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
+  - 几个测试例子见[test examples](./assets/20230724/test_examples.json)；
+  - 此模型是PEFT模型加上微调后的embedding和LM head参数，使用部署请参照[SFT-README](./src/sft/SFT-README.md)或者[vllm-REAME](./src/vllm_serving/REAME.md);
+  - 此模型具有初步的中文沟通和任务能力，但是中文知识仍然有限；我们会持续更新更加强大的版本
+
 2023/07/20 采用开源中文指令数据对LlaMA-2-7B进行微调(不扩充词表/扩充词表); 采用vllm对模型进行serving
 
-2023/07/19 启动LlaMA-2中文大模型；
+2023/07/19 启动LlaMA-2中文大模型项目；
 
 
 
@@ -47,6 +55,10 @@ src/further_ft/download_checkpoints.py
 ### 指令微调
 
 对LlaMA-2进行指令微调(不扩充词表/扩充词表)，也就是现在常见的SFT，见[SFT-README.md](./src/sft/SFT-README.md);
+
+### model serving
+
+模型部署采用huggingface原生代码效率比较慢，为了获得2.7倍左右推理速度提升，我们采用vllm框架进行部署，操作步骤参照[vllm-serving-README](./src/vllm_serving/REAME.md).
 
 
 ### 扩充词表和扩展embedding层
