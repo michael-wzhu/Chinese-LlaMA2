@@ -483,7 +483,7 @@ def main():
         tokenized_dataset = raw_datasets.map(
                     tokenize_function,
                     batched=False,
-                    num_proc=4,
+                    num_proc=12,
                     remove_columns=[prompt_column],
                     load_from_cache_file=True,
                     cache_file_names={k: os.path.join(data_args.dataset_cache_dir, f'tokenized.arrow') for k in raw_datasets},

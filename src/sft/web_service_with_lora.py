@@ -15,11 +15,7 @@ from internal.modeling_llama import LlamaForCausalLM
 from internal.tokenization_llama import LlamaTokenizer
 from internal.configuration_llama import LlamaConfig
 
-# model_path = "/public/home/xlwang2/codes/Med_Prompts/models--BelleGroup--BELLE-7B-2M/snapshots/a9076d928eff1d94fe6b4372ba2bd3a800dc10a1"
-# model_path = "./resources/chinese-llama-alpaca-plus-lora-7b"
-# model_path = "./resources/chinese-llama-plus-lora-7b"
-# model_path = "/public/home/xlwang2/codes/Chinese-LlaMA2/resources/chinese-llama-tmp0"
-model_path = "/public/home/xlwang2/codes/Chinese-LlaMA2/resources/models--meta-llama--Llama-2-7b-hf/snapshots/4e4d531bcab430a66c4d562b7e89e21c0fa235ea"
+model_path = "/public/home/xlwang2/codes/Chinese-LlaMA2/resources/models--meta-llama--Llama-2-7b-chat-hf/snapshots/902d6349aebd6a0f82b1f6280ea57f65e0d03638"
 
 config = LlamaConfig.from_pretrained(
     model_path,
@@ -47,7 +43,7 @@ with torch.no_grad():
 
     # 加载lora
     # peft_model_path = "resources/ChatMed-Consult_llama_lora_pt_v0"
-    peft_model_path = "/public/home/xlwang2/codes/Chinese-LlaMA2/experiments/output/chinese-llama2-instruct-7b-pt-v0/checkpoint-600"
+    peft_model_path = "/your_peft_path"
     model = PeftModel.from_pretrained(model, peft_model_path)
     model.eval()
     print(model)
