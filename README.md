@@ -27,6 +27,10 @@
 - ⏳[Chinese-LlaMA2-chatmed](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chatmed): Chinese-LlaMA2医学领域大模型，支持多轮在线问诊；
 - ⏳[Chinese-LlaMA2-tcm](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-tcm): Chinese-LlaMA2中医药大模型，专注于中医药细分领域，赋能中医药传承
 
+----
+
+[中文医疗大模型ChatMed](https://github.com/michael-wzhu/ChatMed) |  [业内首个中医药大模型ShenNong-TCM-LLM](https://github.com/michael-wzhu/ShenNong-TCM-LLM) | [PromptCBLUE-中文医疗大模型评测基准](https://github.com/michael-wzhu/PromptCBLUE)
+
 
 ## 更新
 
