@@ -425,13 +425,22 @@ def main():
         all_input_ids = []
         all_labels = []
         all_attention_mask = []
-        for content in example[prompt_column]:
+        for i, content in enumerate(example[prompt_column]):
 
             role = content["from"]
             value = content["value"]
 
-            prompt = f"<s>\n{role}:\n{value.strip()}\n</s>"
+            if i == 0:
+                system_prompt = """<<SYS>>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n<</SYS>>"""
+            else:
+                system_prompt = ""
+
+            if role == "human":
+                prompt = f"<s>[INST]{system_prompt}\n{value.strip()}\n[/INST]\n"
+            else:
+                prompt = f"{value.strip()}</s>"
             input_ids = tokenizer(prompt, add_special_tokens=False)["input_ids"]
+
             if role == "human":
                 labels = [-100] * len(input_ids)
             else:

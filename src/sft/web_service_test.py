@@ -14,20 +14,10 @@ sys.path.append("/")
 def test_service():
     header = {'Content-Type': 'application/json'}
 
-    # prompt = "<s>海明威的小说有哪些？"
-    # prompt = "<s>中国有哪些旅游经典值得去："
-    # prompt = "<s>\nhuman:\n你能写一首诗吗？\n</s><s>assistant:\n"
-    # prompt = "<s>\nhuman:\n请介绍一下什么是钢琴？\n</s><s>assistant:\n"
-    prompt = "<s>\nhuman:\n帮我写一个请假邮件，因为要去参加运动会，所以不去上课了\n</s><s>assistant:\n"
-    # prompt = """<s>
-    # human:\n你能写一首诗吗？
-    # </s><s>
-    # assistant:\n当然可以，请问您需要什么主题或情绪表达的内容? 我会用自己最好的方式来创作。
-    # </s><s>
-    # human:\n我想用这首诗歌表达对国人的祝福
-    # </s><s>
-    # assistant:\n"""
-    # prompt = "<s>Can you write a poem for me? "
+    system_prompt = """<<SYS>>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n<</SYS>>"""
+
+    query = "帮我写一个请假邮件，因为要去参加运动会，所以不去上课了"
+    prompt = f"<s>[INST]{system_prompt}\n{query.strip()}\n[/INST]\n"
 
     data = {
           # "query": "<s>" + "[Round 0]\n问：男，目前28岁，最近几年，察觉，房事不太给力，另外，每次才开始就已经射了，请问：男生早泄是由于哪些原因诱发的。\n答：",
