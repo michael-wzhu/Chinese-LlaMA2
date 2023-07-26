@@ -18,10 +18,7 @@
   - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
 - ⏳ [Chinese-LlaMA2-chat](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chat): 对[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B)进行指令微调和多轮对话微调，以适应各种应用场景和多轮对话交互。
 
-同时我们也考虑更为快速的中文适配方案：
-- ⏳Chinese-LlaMA2-sft-v0: 采用现有的开源中文指令微调或者是对话数据，对LlaMA-2进行直接微调 (将于近期开源)
-
-注意，为了遵循相应的许可，我们将不会发布完整的模型权重，只发布LoRA权重，其与Meta的LlaMA2权重合并即可形成Chinese-LlaMA2模型。
+注意，遵循相应的许可，我们将发布完整的, 合并LoRA权重的完整，且同时发布LoRA权重，方便开源社区使用。
 
 同时，我们将会围绕Chinese-LlaMA2打造各种垂直领域模型：
 - ⏳[Chinese-LlaMA2-chatmed](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chatmed): Chinese-LlaMA2医学领域大模型，支持多轮在线问诊；
@@ -34,7 +31,7 @@
 
 ## 更新
 
-2023/07/26 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
+2023/0725 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.2), 包含LoRA参数和合并后的完整模型参数。扩充词表，进行指令微调的模型将于两日后发布
 
 2023/07/24 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
   - 几个测试例子见[test examples](./assets/20230724/test_examples.json)；
