@@ -31,7 +31,7 @@
 
 ## 更新
 
-2023/0725 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.2), 包含LoRA参数和合并后的完整模型参数。扩充词表，进行指令微调的模型将于两日后发布
+2023/07/25 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.2), 包含LoRA参数和合并后的完整模型参数。扩充词表，进行指令微调的模型将于两日后发布
 
 2023/07/24 更新了一个不扩充词表，微调了100w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.1)
   - 几个测试例子见[test examples](./assets/20230724/test_examples.json)；
