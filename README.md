@@ -12,7 +12,7 @@
 
 就在不久前，Meta最新开源了Llama 2模型，完全可商用，看来Meta势必要与OpenAI (ClosedAI) 硬刚到底。虽然Llama 2对原版的LlaMA模型做了升级，但是其仍然对中文没有太好的支持，需要在中文上做定制化。所以我们决定在次开展Llama 2的中文汉化工作：
 - 🚀 [Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft)：对Llama-2直接进行有监督微调，
-  - 采用开源指令微调数据，如UltraChat, 各种版本的中文alpaca语料等；
+  - 采用开源指令微调数据，如UltraChat, 各种版本的中文alpaca语料(如Chinese-alpaca, BELLE)等；
   - 注意LlaMA词表本身是支持中文的，所以我们会训练不扩充词表版本和扩充词表版本
 - ⏳ [Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行大规模中文预训练；
   - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
@@ -26,10 +26,12 @@
 
 ----
 
-[中文医疗大模型ChatMed](https://github.com/michael-wzhu/ChatMed) |  [业内首个中医药大模型ShenNong-TCM-LLM](https://github.com/michael-wzhu/ShenNong-TCM-LLM) | [PromptCBLUE-中文医疗大模型评测基准](https://github.com/michael-wzhu/PromptCBLUE)
+[中文医疗大模型ChatMed](https://github.com/michael-wzhu/ChatMed) |  [业内首个中医药大模型ShenNong-TCM-LLM](https://github.com/michael-wzhu/ShenNong-TCM-LLM) | [PromptCBLUE-中文医疗大模型评测基准](https://github.com/michael-wzhu/PromptCBLUE) | [PrompTS-探索采用大模型处理各种时间序列任务](https://github.com/michael-wzhu/PrompTS)
 
 
 ## 更新
+
+2023/07/28 更新了扩展词表，且微调了300w中文指令数据的模型[Chinese-LlaMA2-chat-sft-v0.3](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft-v0.3) (v0.2), 包含LoRA参数和合并后的完整模型参数。这一模型还在继续训练中，训练规模将会达到1500w条中文指令/对话数据; 同时更新了量化模型进行部署的代码和gradio demo的代码
 
 2023/07/25 更新了一个不扩充词表，微调了300w中文指令数据的模型[Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft) (v0.2), 包含LoRA参数和合并后的完整模型参数。扩充词表，进行指令微调的模型将于两日后发布
 
@@ -69,7 +71,9 @@ src/further_ft/download_checkpoints.py
 
 ### model serving
 
-模型部署采用huggingface原生代码效率比较慢，为了获得2.7倍左右推理速度提升，我们采用vllm框架进行部署，操作步骤参照[vllm-serving-README](./src/vllm_serving/REAME.md).
+- vllm 部署：模型部署采用huggingface原生代码效率比较慢，为了获得2.7倍左右推理速度提升，我们采用vllm框架进行部署，操作步骤参照[vllm-serving-README](./src/vllm_serving/REAME.md).
+- 模型量化：参考ChatGLM的量化代码，对Chinese-llama2模型进行量化。详见[量化部署代码](./src/serving/web_service_with_quantized_model.py)
+- gradio demo代码：见[gradio demo code](./src/serving/gradio_demo.py)
 
 
 ### 扩充词表和扩展embedding层
