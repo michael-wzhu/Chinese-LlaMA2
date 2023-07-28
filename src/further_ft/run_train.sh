@@ -13,7 +13,7 @@ per_device_batch_size=2
 gradient_accumulation_steps=128
 training_steps=10000
 output_dir="./experiments/output/chinese-llama2-7b-pt-v0"
-deepspeed_config_file="internal/deepspeed_config_zero2.json"
+deepspeed_config_file="src/further_ft/deepspeed_config_zero2_bf16.json"
 
 torchrun \
   --nnodes 1 \
