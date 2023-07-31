@@ -604,7 +604,7 @@ def main():
             r=lora_rank,
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
-            modules_to_save=modules_to_save
+            modules_to_save=None
         )
         model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
@@ -612,6 +612,11 @@ def main():
     model.state_dict = (
         lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
     ).__get__(model, type(model))
+
+    for n, p in model.named_parameters():
+        if "embed_tokens" in n or "lm_head" in n:
+            p.requires_grad = True
+        # print(n, p.requires_grad, p.shape)
     for n, p in model.named_parameters():
         print(n, p.requires_grad, p.shape)
 
