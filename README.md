@@ -71,7 +71,7 @@ src/further_ft/download_checkpoints.py
 
 ### model serving
 
-- vllm 部署：模型部署采用huggingface原生代码效率比较慢，为了获得2.7倍左右推理速度提升，我们采用vllm框架进行部署，操作步骤参照[vllm-serving-README](./src/vllm_serving/REAME.md).
+- vllm 部署：模型部署采用huggingface原生代码效率比较慢，为了获得2.7倍左右推理速度提升，我们采用vllm框架进行部署，操作步骤参照[vllm-serving-README](./src/serving/vllm_serving/REAME.md).
 - 模型量化：参考ChatGLM的量化代码，对Chinese-llama2模型进行量化。详见[量化部署代码](./src/serving/web_service_with_quantized_model.py)
 - gradio demo代码：见[gradio demo code](./src/serving/gradio_demo.py)
 
