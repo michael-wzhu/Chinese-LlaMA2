@@ -15,7 +15,7 @@
   - 采用开源指令微调数据，如UltraChat, 各种版本的中文alpaca语料(如Chinese-alpaca, BELLE)等；
   - 注意LlaMA词表本身是支持中文的，所以我们会训练不扩充词表版本和扩充词表版本
 - ⏳ [Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行大规模中文预训练；
-  - 第一步：先在42G中文预料上进行训练；后续将会加大训练规模 
+  - 第一步：先在42G中文语料上进行训练；后续将会加大训练规模 
 - ⏳ [Chinese-LlaMA2-chat](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B-chat): 对[Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B)进行指令微调和多轮对话微调，以适应各种应用场景和多轮对话交互。
 
 注意，遵循相应的许可，我们将发布完整的, 合并LoRA权重的完整，且同时发布LoRA权重，方便开源社区使用。
@@ -81,6 +81,7 @@ src/further_ft/download_checkpoints.py
 我们现在采用的方案是：使用[Chinese-LLaMA](https://github.com/ymcui/Chinese-LLaMA-Alpaca)的词表，该词表是对llama原始词表的扩充，将词汇量从32000扩展到49953大小。同时LlaMA-2模型会进行embedding层的resize，即采用随机初始化的参数扩展embedding层和lm_head层。
 
 在一些我们关注的垂直领域，我们后续也会自己训一个sentencepiece模型来更新llama-2的词表。
+
 
 ### 继续预训练
 
