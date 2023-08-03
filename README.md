@@ -11,7 +11,7 @@
 </p>
 
 就在不久前，Meta最新开源了Llama 2模型，完全可商用，看来Meta势必要与OpenAI (ClosedAI) 硬刚到底。虽然Llama 2对原版的LlaMA模型做了升级，但是其仍然对中文没有太好的支持，需要在中文上做定制化。所以我们决定在次开展Llama 2的中文汉化工作：
-- 🚀 [Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft)：对Llama-2直接进行有监督微调，
+- 🚀 [Chinese-LlaMA2-chat-sft](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-chat-7B-sft-v0.3)：对Llama-2直接进行有监督微调，
   - 采用开源指令微调数据，如UltraChat, 各种版本的中文alpaca语料(如Chinese-alpaca, BELLE)等；
   - 注意LlaMA词表本身是支持中文的，所以我们会训练不扩充词表版本和扩充词表版本
 - ⏳ [Chinese-LlaMA2](https://huggingface.co/michaelwzhu/Chinese-LlaMA2-7B): 对Llama 2进行大规模中文预训练；
