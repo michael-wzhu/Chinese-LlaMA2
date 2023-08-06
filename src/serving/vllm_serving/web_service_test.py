@@ -21,7 +21,7 @@ def test_service(input_text):
           "parameters": {},
     }
     request = urllib.request.Request(
-        url='http://127.0.0.1:8090/generate',
+        url='http://127.0.0.1:9005/chatmed_generate',
         headers=header,
         data=json.dumps(data).encode('utf-8')
     )

@@ -250,7 +250,8 @@ sys.path.append("./")
 
 from peft import LoraConfig, TaskType, get_peft_model, PeftModel
 
-model_path = "/your_path/chinese-llama2-7b-model"
+# model_path = "/your_path/chinese-llama2-7b-model"
+model_path = "./experiments/output/chinese-llama2-chat-7b-pt-v3/checkpoint-1200-merge"
 config = AutoConfig.from_pretrained(
     model_path,
 )
@@ -278,13 +279,13 @@ with torch.no_grad():
 
 
 generation_config = dict(
-    temperature=0.2,
+    # temperature=0.2,
     # top_k=40,
     top_p=0.9,
     do_sample=True,
-    num_beams=1,
-    repetition_penalty=1.3,
-    max_new_tokens=400
+    # num_beams=2,
+    repetition_penalty=1.2,
+    # max_new_tokens=256
 )
 
 from flask import Flask, request
@@ -292,8 +293,8 @@ from flask import Flask, request
 app = Flask(__name__)
 
 
-@app.route("/chatmed_generate", methods=["POST"])
-def cough_predict():
+@app.route("/llm_generate", methods=["POST"])
+def llm_predict():
     input_data = json.loads(
         request.get_data().decode("utf-8")
     )
@@ -315,9 +316,10 @@ def cough_predict():
         )
         s = generation_output[0]
         print(s)
-        output = tokenizer.decode(s, skip_special_tokens=True)
+        output = tokenizer.decode(s, skip_special_tokens=False)
+        print("output: ", output)
 
-        response = output.split("答：\n")[1].strip()
+        response = output.split("\n[/INST]\n")[-1].strip()
 
     print(output)
 

@@ -2,17 +2,27 @@ import gradio as gr
 import mdtex2html
 import urllib
 import json
-def test_service(input_text):
+def test_service(input_text, history=None):
     header = {'Content-Type': 'application/json'}
 
-    prompt = "<s>问：\n{}\n答：\n".format(input_text.strip())
+    system_prompt = """<<SYS>>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n<</SYS>>"""
+
+    prompt = ""
+    for i, round in enumerate(history):
+
+        if i == 0:
+            prompt += f"<s>[INST]{system_prompt}\n{round[0].strip()}\n[/INST]\n{round[1].strip()}</s>"
+        else:
+            prompt += f"<s>[INST]\n{round[0].strip()}\n[/INST]\n{round[1].strip()}</s>"
+
+    prompt += f"<s>[INST]\n{input_text.strip()}\n[/INST]\n"
 
     data = {
           "query": prompt,
           "max_new_tokens": 1024,
     }
     request = urllib.request.Request(
-        url='http://127.0.0.1:9005/chatmed_generat',
+        url='http://127.0.0.1:9005/llm_generate',
         headers=header,
         data=json.dumps(data).encode('utf-8')
     )
@@ -90,7 +100,7 @@ def predict(input, chatbot, max_length, top_p, temperature, history):
     # )
     response = test_service(
         input,
-        # history=history,
+        history=history,
         # max_length=max_length,
         # top_p=top_p,
         # temperature=temperature
@@ -113,7 +123,7 @@ def reset_state():
 
 
 with gr.Blocks() as demo:
-    gr.HTML("""<h1 align="center">ChatMed - Online consultations </h1>""")
+    gr.HTML("""<h1 align="center">Chinese-LlaMA2 - demo </h1>""")
     chatbot = gr.Chatbot()
     with gr.Row():
         with gr.Column(scale=4):
