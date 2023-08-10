@@ -65,8 +65,9 @@ sys.path.append("./")
 
 from peft import LoraConfig, TaskType, get_peft_model, PeftModel, get_peft_model_state_dict
 
-from internal.modeling_llama import LlamaForCausalLM
-from internal.tokenization_llama import LlamaTokenizer
+from src.further_ft.modeling_llama import LlamaForCausalLM
+from src.further_ft.tokenization_llama import LlamaTokenizer
+from src.sft.collator import MyDataCollatorForSeq2Seq
 
 os.environ["WANDB_MODE"] = "disabled"
 
@@ -424,7 +425,6 @@ def main():
     def tokenize_function(example):
         all_input_ids = []
         all_labels = []
-        all_attention_mask = []
         for i, content in enumerate(example[prompt_column]):
 
             role = content["from"]
@@ -455,6 +455,18 @@ def main():
         all_attention_mask = [1] * len(all_input_ids)
 
         assert len(all_input_ids) == len(all_attention_mask) == len(all_labels)
+
+        max_seq_length = data_args.block_size
+        if len(all_input_ids) > max_seq_length:
+            all_input_ids = all_input_ids[-max_seq_length: ]
+            all_attention_mask = all_attention_mask[-max_seq_length: ]
+            all_labels = all_labels[-max_seq_length: ]
+
+        if len(all_input_ids) < max_seq_length:
+            all_input_ids = all_input_ids + [tokenizer.pad_token_id] * (max_seq_length - len(all_input_ids))
+            all_labels = all_labels + [-100] * (max_seq_length - len(all_labels))
+            all_attention_mask = all_attention_mask + [0] * (max_seq_length - len(all_attention_mask))
+
         return {
             "input_ids": all_input_ids,
             "attention_mask": all_attention_mask,
@@ -533,16 +545,16 @@ def main():
         print(tokenized_dataset["train"][3]['input_ids'])
         print(tokenized_dataset["train"][3]['labels'])
 
-        tokenized_dataset = tokenized_dataset.map(
-                    group_texts,
-                    batched=True,
-                    # batch_size=1024,
-                    num_proc=8,
-                    load_from_cache_file=True,
-                    keep_in_memory=False,
-                    # cache_file_names = {k: os.path.join(data_args.dataset_cache_dir, f'grouped.arrow') for k in tokenized_dataset},
-                    desc=f"Grouping texts in chunks of {block_size}",
-                )
+        # tokenized_dataset = tokenized_dataset.map(
+        #             group_texts,
+        #             batched=True,
+        #             # batch_size=1024,
+        #             num_proc=8,
+        #             load_from_cache_file=True,
+        #             keep_in_memory=False,
+        #             # cache_file_names = {k: os.path.join(data_args.dataset_cache_dir, f'grouped.arrow') for k in tokenized_dataset},
+        #             desc=f"Grouping texts in chunks of {block_size}",
+        #         )
 
         lm_datasets = tokenized_dataset["train"].train_test_split(test_size =0.0001)
         print(lm_datasets)
@@ -657,7 +669,7 @@ def main():
     for n, p in model.named_parameters():
         print(n, p.requires_grad, p.shape)
 
-    data_collator = DataCollatorForSeq2Seq(
+    data_collator = MyDataCollatorForSeq2Seq(
         tokenizer,
         model=model,
         label_pad_token_id=-100,
